@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta name="viewport" content="initial-scale=1.0, user-scalable=no">
+    <meta charset="utf-8">
+    <title>Trinity to Downtown Bus Map</title>
+    <script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js'></script>
+    <style>
+      html, body {
+        margin: 0;
+        padding: 0;
+      }
+    </style>
+  </head>
+
+  <body>
+
+    <script>
+      function changeLink() {
+        if ($('#map').contents().find('.google-maps-link').get(0)) {
+          $('#map').contents().find('.google-maps-link').html('See Bus Schedule &#128652;');
+          $('#map').contents().find('.google-maps-link').css('font-size', '1.2em');
+        } else {
+          setTimeout(changeLink, 100);
+        }
+      }
+      changeLink();
+    </script>
+
+    <iframe id="map" src="https://www.google.com/maps/embed/v1/directions?key=AIzaSyBSencJhgKd_16C89P7OB_bSpi0FhDT6bU&mode=transit&origin=Trinity+College,+Summit+Street,+Hartford,+CT&destination=200+Constitution+Plaza,+Hartford,+CT"
+    width="100%" height="500" frameborder="0" style="border:0" allowfullscreen>
+
+  </body>
+</html>
