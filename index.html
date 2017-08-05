@@ -9,26 +9,69 @@
       html, body {
         margin: 0;
         padding: 0;
+        font-family: Arial;
+        font-size: 16px;
+      }
+      #map {
+        width: 100vw;
+        height: 100vh;
+      }
+      #schedule {
+        position: absolute;
+        z-index: 999;
+        top: 10px;
+        left: 10px;
+        background: white;
+        padding: 10px;
+      }
+      a, a:hover, a:visited {
+        color: rgb(58, 132, 223);
+        text-decoration: none;
+      }
+      a:hover {
+        text-decoration: underline;
       }
     </style>
   </head>
 
   <body>
 
+    <div id="map"></div>
+    <div id="schedule">
+      &#128652;
+      <a href="https://maps.google.com/maps?ll=41.755394,-72.680268&z=14&t=m&hl=en-US&gl=US&mapclient=embed&saddr=Trinity%20College&daddr=10%20Constitution%20Plaza%2C%20Hartford%2C%20CT%2006103&dirflg=r">See Bus Schedule</a>
+    </div>
+
     <script>
-      function changeLink() {
-        if ($('#map').contents().find('.google-maps-link').get(0)) {
-          $('#map').contents().find('.google-maps-link').html('See Bus Schedule &#128652;');
-          $('#map').contents().find('.google-maps-link').css('font-size', '1.2em');
-        } else {
-          setTimeout(changeLink, 100);
-        }
+      function initMap() {
+        var directionsService = new google.maps.DirectionsService;
+        var directionsDisplay = new google.maps.DirectionsRenderer;
+
+        var map = new google.maps.Map(document.getElementById('map'), {
+          zoom: 14,
+          center: {lat: 41.757690, lng: -72.683811}
+        });
+
+        directionsDisplay.setMap(map);
+
+        directionsService.route({
+          origin: 'Trinity College, Hartford, CT',
+          destination: '10 Constitution Plaza, Hartford, CT',
+          travelMode: 'TRANSIT'
+        }, function(response, status) {
+          if (status === 'OK') {
+            directionsDisplay.setDirections(response);
+          } else {
+            window.alert('Directions request failed due to ' + status);
+          }
+        });
+
       }
-      changeLink();
     </script>
 
-    <iframe id="map" src="https://www.google.com/maps/embed/v1/directions?key=AIzaSyBSencJhgKd_16C89P7OB_bSpi0FhDT6bU&mode=transit&origin=Trinity+College,+Summit+Street,+Hartford,+CT&destination=200+Constitution+Plaza,+Hartford,+CT"
-    width="100%" height="500" frameborder="0" style="border:0" allowfullscreen>
+    <script async defer
+      src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDYB7YXly3VfIn1qiaq5F4Gn2FdCMEZPFc&callback=initMap">
+    </script>
 
   </body>
 </html>
